@@ -59,14 +59,12 @@ def user_choice():
     valid = False
 
     while not valid:
-        response = input("Do you want to calculate time, mass or measurements?").lower()
+        response = input("Do you want to calculate time, mass, or measurements?").lower()
 
-        # a list of valid responses
         time_ok = ["time", "t"]
         mass_ok = ["mass", "weight"]
         measure_ok = ["measurements", "measure", "measurement"]
 
-        # checks for valid response and returns text, integer or image
         if response in time_ok:
             return "time"
         elif response in mass_ok:
@@ -79,23 +77,85 @@ def user_choice():
                 return "mass"
             else:
                 return "measurement"
-        else:
-            # if response is not valid (in the lists), output an error
-            print("Sorry, please choose to calculate time, mass or measurements")
-            print()
 
 
 # Main routine
 statement_generator("Ultimate Conversion Calculator", "*")
 first_time = input("Press <enter> for instructions on how to use the calculator"
                    " otherwise any other key to continue")
-
 keep_going = ""
 while keep_going == "":
-    if first_time == "":
-        instructions()
     calc_choice = user_choice()
-    print("You chose", calc_choice)
+    if calc_choice == "measurement":
+        my_dict = {
+            "centimeters to kilometers": 0.00001,
+            "centimeters to meters": 0.01,
+            "meters to kilometers": 0.001,
+            "meters to centimeters": 100,
+            "kilometers to meters": 1000,
+            "kilometers to centimeters": 100000,
+        }
+
+        your_num = float(input("Enter the length: "))
+
+        while True:
+            to_do = input(
+                "Centimeters to Meters, Meters to Kilometers, or Centimeters to Kilometers? (or vice versa)").lower()
+            if to_do in my_dict:
+                multiply_by = my_dict[to_do]
+                answer = your_num * multiply_by
+                print(f"{your_num} {to_do} is {answer}")
+                break  # Exit the loop if a valid conversion choice is made
+            else:
+                print("Invalid conversion choice. Please choose a valid option.")
+
+    elif calc_choice == "mass":
+        my_dict = {
+            "milligrams to grams": 0.001,
+            "milligrams to kilograms": 0.000001,
+            "grams to milligrams": 1000,
+            "grams to kilograms": 0.001,
+            "kilograms to grams": 1000,
+            "kilograms to milligrams": 1000000,
+        }
+
+        your_num = float(input("Enter the Mass: "))
+
+        while True:
+            to_do = input(
+                "Milligrams to Grams, Grams to Kilograms (or to milligrams) "
+                "or Kilograms to Milligrams or Grams").lower()
+            if to_do in my_dict:
+                multiply_by = my_dict[to_do]
+                answer = your_num * multiply_by
+                print(f"{your_num} {to_do} is {answer}")
+                break  # Exit the loop if a valid conversion choice is made
+            else:
+                print("Invalid conversion choice. Please choose a valid option.")
+
+    elif calc_choice == "time":
+        my_dict = {
+            "seconds to minutes": 0.01666666666,
+            "minutes to hours": 0.01666666666,
+            "minutes to seconds": 60,
+            "hours to minutes": 60,
+            "hours to seconds": 3600,
+         }
+
+        your_num = float(input("Enter the amount of Time: "))
+
+        while True:
+            to_do = input(
+                "Seconds to Minutes, Minutes to Hours or Hours to (Minutes/Hours)").lower()
+            if to_do in my_dict:
+                multiply_by = my_dict[to_do]
+                answer = your_num * multiply_by
+                print()
+                print(f"{your_num} {to_do} is {answer}")
+                break  # Exit the loop if a valid conversion choice is made
+            else:
+                print("Invalid conversion choice. Please choose a valid option.")
+
     print()
     keep_going = input("Press <enter> to continue or any key to stop")
     print()
