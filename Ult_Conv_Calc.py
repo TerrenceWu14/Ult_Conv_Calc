@@ -86,6 +86,14 @@ first_time = input("Press <enter> for instructions on how to use the calculator"
 keep_going = ""
 while keep_going == "":
     calc_choice = user_choice()
+    conversion_description = {
+        "seconds to minutes": "{} seconds is equal to {} minutes",
+        "seconds to hours": "{} seconds is equal to {} hours",
+        "minutes to hours": "{} minutes is equal to {} hours",
+        "minutes to seconds": "{} minutes is equal to {} seconds",
+        "hours to minutes": "{} hours is equal to {} minutes",
+        "hours to seconds": "{} hours is equal to {} seconds",
+    }
     if calc_choice == "measurement":
         my_dict = {
             "centimeters to kilometers": 0.00001,
@@ -96,7 +104,12 @@ while keep_going == "":
             "kilometers to centimeters": 100000,
         }
 
-        your_num = float(input("Enter the length: "))
+        while True:
+            your_num = float(input("Enter a positive number: "))
+            if your_num <= 0:
+                print("Please enter a positive number greater than zero.")
+            else:
+                break
 
         while True:
             to_do = input(
@@ -104,7 +117,9 @@ while keep_going == "":
             if to_do in my_dict:
                 multiply_by = my_dict[to_do]
                 answer = your_num * multiply_by
-                print(f"{your_num} {to_do} is {answer}")
+                rounded_answer = round(answer, 2)
+                conversion_description = conversion_description.get(to_do, "Unknown conversion")
+                print(f"{conversion_description.format(your_num, answer)}")
                 break  # Exit the loop if a valid conversion choice is made
             else:
                 print("Invalid conversion choice. Please choose a valid option.")
@@ -119,7 +134,12 @@ while keep_going == "":
             "kilograms to milligrams": 1000000,
         }
 
-        your_num = float(input("Enter the Mass: "))
+        while True:
+            your_num = float(input("Enter a positive number: "))
+            if your_num <= 0:
+                print("Please enter a positive number greater than zero.")
+            else:
+                break
 
         while True:
             to_do = input(
@@ -128,7 +148,9 @@ while keep_going == "":
             if to_do in my_dict:
                 multiply_by = my_dict[to_do]
                 answer = your_num * multiply_by
-                print(f"{your_num} {to_do} is {answer}")
+                rounded_answer = round(answer, 2)
+                conversion_description = conversion_description.get(to_do, "Unknown conversion")
+                print(f"{conversion_description.format(your_num, answer)}")
                 break  # Exit the loop if a valid conversion choice is made
             else:
                 print("Invalid conversion choice. Please choose a valid option.")
@@ -136,13 +158,19 @@ while keep_going == "":
     elif calc_choice == "time":
         my_dict = {
             "seconds to minutes": 0.01666666666,
+            "seconds to hours": 0.00027777777,
             "minutes to hours": 0.01666666666,
             "minutes to seconds": 60,
             "hours to minutes": 60,
             "hours to seconds": 3600,
-         }
+        }
 
-        your_num = float(input("Enter the amount of Time: "))
+        while True:
+            your_num = float(input("Enter a positive number: "))
+            if your_num <= 0:
+                print("Please enter a positive number greater than zero.")
+            else:
+                break
 
         while True:
             to_do = input(
@@ -150,8 +178,8 @@ while keep_going == "":
             if to_do in my_dict:
                 multiply_by = my_dict[to_do]
                 answer = your_num * multiply_by
-                print()
-                print(f"{your_num} {to_do} is {answer}")
+                conversion_description = conversion_description.get(to_do, "Unknown conversion")
+                print(f"{conversion_description.format(your_num, answer)}")
                 break  # Exit the loop if a valid conversion choice is made
             else:
                 print("Invalid conversion choice. Please choose a valid option.")
