@@ -83,19 +83,32 @@ def user_choice():
 statement_generator("Ultimate Conversion Calculator", "*")
 first_time = input("Press <enter> for instructions on how to use the calculator"
                    " otherwise any other key to continue")
+
+conversion_description = {
+    "seconds to minutes": "{} seconds is equal to {} minutes",
+    "seconds to hours": "{} seconds is equal to {} hours",
+    "minutes to hours": "{} minutes is equal to {} hours",
+    "minutes to seconds": "{} minutes is equal to {} seconds",
+    "hours to minutes": "{} hours is equal to {} minutes",
+    "hours to seconds": "{} hours is equal to {} seconds",
+    "milligrams to grams": "{} milligrams is equal to {} grams",
+    "milligrams to kilograms": "{} milligrams is equal to {} kilograms",
+    "grams to milligrams": "{} grams is equal to {} milligrams",
+    "grams to kilograms": "{} grams is equal to {} kilograms",
+    "kilograms to grams": "{} kilograms is equal to {} grams",
+    "kilograms to milligrams": "{} kilograms is equal to {} milligrams",
+    "centimeters to kilometers": "{} centimeters is equal to {} kilometers",
+    "centimeters to meters": "{} centimeters is equal to {} meters",
+    "meters to kilometers": "{} meters is equal to {} kilometers",
+    "meters to centimeters": "{} meters is equal to {} centimeters",
+    "kilometers to meters": "{} kilometers is equal to {} meters",
+    "kilometers to centimeters": "{} kilometers is equal to {} centimeters",
+}
 keep_going = ""
 while keep_going == "":
     calc_choice = user_choice()
-    conversion_description = {
-        "seconds to minutes": "{} seconds is equal to {} minutes",
-        "seconds to hours": "{} seconds is equal to {} hours",
-        "minutes to hours": "{} minutes is equal to {} hours",
-        "minutes to seconds": "{} minutes is equal to {} seconds",
-        "hours to minutes": "{} hours is equal to {} minutes",
-        "hours to seconds": "{} hours is equal to {} seconds",
-    }
     if calc_choice == "measurement":
-        my_dict = {
+        conversion_factors = {
             "centimeters to kilometers": 0.00001,
             "centimeters to meters": 0.01,
             "meters to kilometers": 0.001,
@@ -103,7 +116,6 @@ while keep_going == "":
             "kilometers to meters": 1000,
             "kilometers to centimeters": 100000,
         }
-
         while True:
             your_num = float(input("Enter a positive number: "))
             if your_num <= 0:
@@ -113,9 +125,9 @@ while keep_going == "":
 
         while True:
             to_do = input(
-                "Centimeters to Meters, Meters to Kilometers, or Centimeters to Kilometers? (or vice versa)").lower()
-            if to_do in my_dict:
-                multiply_by = my_dict[to_do]
+                "What do you want to convert from and to? ").lower()
+            if to_do in conversion_factors:
+                multiply_by = conversion_factors[to_do]
                 answer = your_num * multiply_by
                 rounded_answer = round(answer, 2)
                 conversion_description = conversion_description.get(to_do, "Unknown conversion")
@@ -125,7 +137,7 @@ while keep_going == "":
                 print("Invalid conversion choice. Please choose a valid option.")
 
     elif calc_choice == "mass":
-        my_dict = {
+        conversion_factors = {
             "milligrams to grams": 0.001,
             "milligrams to kilograms": 0.000001,
             "grams to milligrams": 1000,
@@ -143,10 +155,9 @@ while keep_going == "":
 
         while True:
             to_do = input(
-                "Milligrams to Grams, Grams to Kilograms (or to milligrams) "
-                "or Kilograms to Milligrams or Grams").lower()
-            if to_do in my_dict:
-                multiply_by = my_dict[to_do]
+                "What do you want to convert from and to? ").lower()
+            if to_do in conversion_factors:
+                multiply_by = conversion_factors[to_do]
                 answer = your_num * multiply_by
                 rounded_answer = round(answer, 2)
                 conversion_description = conversion_description.get(to_do, "Unknown conversion")
@@ -156,7 +167,7 @@ while keep_going == "":
                 print("Invalid conversion choice. Please choose a valid option.")
 
     elif calc_choice == "time":
-        my_dict = {
+        conversion_factors = {
             "seconds to minutes": 0.01666666666,
             "seconds to hours": 0.00027777777,
             "minutes to hours": 0.01666666666,
@@ -164,7 +175,6 @@ while keep_going == "":
             "hours to minutes": 60,
             "hours to seconds": 3600,
         }
-
         while True:
             your_num = float(input("Enter a positive number: "))
             if your_num <= 0:
@@ -174,9 +184,9 @@ while keep_going == "":
 
         while True:
             to_do = input(
-                "Seconds to Minutes, Minutes to Hours or Hours to (Minutes/Hours)").lower()
-            if to_do in my_dict:
-                multiply_by = my_dict[to_do]
+                "What do you want to convert from and to? ").lower()
+            if to_do in conversion_factors:
+                multiply_by = conversion_factors[to_do]
                 answer = your_num * multiply_by
                 conversion_description = conversion_description.get(to_do, "Unknown conversion")
                 print(f"{conversion_description.format(your_num, answer)}")
