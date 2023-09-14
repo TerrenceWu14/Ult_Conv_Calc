@@ -62,50 +62,46 @@ def user_choice():
         response = input("Do you want to calculate time, mass, or measurements?").lower()
 
         time_ok = ["time", "t"]
-        mass_ok = ["mass", "weight"]
-        measure_ok = ["measurements", "measure", "measurement"]
+        mass_ok = ["m", "mass", "weight"]
+        distance_ok = ["distance, d"]
 
         if response in time_ok:
             return "time"
         elif response in mass_ok:
             return "mass"
-        elif response in measure_ok:
-            return "measurement"
-        elif response == "m":
-            choice = input("Press <enter> for mass or any key for measurement: ")
-            if choice == "":
-                return "mass"
-            else:
-                return "measurement"
+        elif response in distance_ok:
+            return "distance"
 
 
 # Main routine
 statement_generator("Ultimate Conversion Calculator", "*")
 first_time = input("Press <enter> for instructions on how to use the calculator"
                    " otherwise any other key to continue")
+if first_time == "":
+    instructions()
 
-conversion_description = {
-    "seconds to minutes": "{} seconds is equal to {} minutes",
-    "seconds to hours": "{} seconds is equal to {} hours",
-    "minutes to hours": "{} minutes is equal to {} hours",
-    "minutes to seconds": "{} minutes is equal to {} seconds",
-    "hours to minutes": "{} hours is equal to {} minutes",
-    "hours to seconds": "{} hours is equal to {} seconds",
-    "milligrams to grams": "{} milligrams is equal to {} grams",
-    "milligrams to kilograms": "{} milligrams is equal to {} kilograms",
-    "grams to milligrams": "{} grams is equal to {} milligrams",
-    "grams to kilograms": "{} grams is equal to {} kilograms",
-    "kilograms to grams": "{} kilograms is equal to {} grams",
-    "kilograms to milligrams": "{} kilograms is equal to {} milligrams",
-    "centimeters to kilometers": "{} centimeters is equal to {} kilometers",
-    "centimeters to meters": "{} centimeters is equal to {} meters",
-    "meters to kilometers": "{} meters is equal to {} kilometers",
-    "meters to centimeters": "{} meters is equal to {} centimeters",
-    "kilometers to meters": "{} kilometers is equal to {} meters",
-    "kilometers to centimeters": "{} kilometers is equal to {} centimeters",
-}
 keep_going = ""
 while keep_going == "":
+    conversion_description = {
+        "seconds to minutes": "{} seconds is equal to {} minutes",
+        "seconds to hours": "{} seconds is equal to {} hours",
+        "minutes to hours": "{} minutes is equal to {} hours",
+        "minutes to seconds": "{} minutes is equal to {} seconds",
+        "hours to minutes": "{} hours is equal to {} minutes",
+        "hours to seconds": "{} hours is equal to {} seconds",
+        "milligrams to grams": "{} milligrams is equal to {} grams",
+        "milligrams to kilograms": "{} milligrams is equal to {} kilograms",
+        "grams to milligrams": "{} grams is equal to {} milligrams",
+        "grams to kilograms": "{} grams is equal to {} kilograms",
+        "kilograms to grams": "{} kilograms is equal to {} grams",
+        "kilograms to milligrams": "{} kilograms is equal to {} milligrams",
+        "centimeters to kilometers": "{} centimeters is equal to {} kilometers",
+        "centimeters to meters": "{} centimeters is equal to {} meters",
+        "meters to kilometers": "{} meters is equal to {} kilometers",
+        "meters to centimeters": "{} meters is equal to {} centimeters",
+        "kilometers to meters": "{} kilometers is equal to {} meters",
+        "kilometers to centimeters": "{} kilometers is equal to {} centimeters",
+    }
     calc_choice = user_choice()
     if calc_choice == "measurement":
         conversion_factors = {
