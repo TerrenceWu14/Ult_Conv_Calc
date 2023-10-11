@@ -1,5 +1,8 @@
 # Functions go here
 
+# Try to go to a base value e.g. distance base value would be meters,
+# Go to meters first by timing the number by 0.01 and then convert from there
+
 # Checks that the number entered is more than 0
 def num_check(question1: object):
     # checks if the user entered a number that is more than zero
@@ -74,23 +77,14 @@ def user_choice():
 
 
 # Calculates distance
-def calc(distance):
-    distance_desc = {
-        "centimeters to kilometers": "{} centimeters is equal to {} kilometers",
-        "centimeters to meters": "{} centimeters is equal to {} meters",
-        "meters to kilometgithers": "{} meters is equal to {} kilometers",
-        "meters to centimeters": "{} meters is equal to {} centimeters",
-        "kilometers to meters": "{} kilometers is equal to {} meters",
-        "kilometers to centimeters": "{} kilometers is equal to {} centimeters",
-    }
-
-    conversion_factors = {
-        "centimeters to kilometers": 0.00001,
-        "centimeters to meters": 0.01,
-        "meters to kilometers": 0.001,
-        "meters to centimeters": 100,
-        "kilometers to meters": 1000,
-        "kilometers to centimeters": 100000,
+def distance():
+    conversion_data = {
+        "centimeters to kilometers": {"factor": 0.00001, "description": "{} centimeters is equal to {} kilometers"},
+        "centimeters to meters": {"factor": 0.01, "description": "{} centimeters is equal to {} meters"},
+        "meters to kilometers": {"factor": 0.001, "description": "{} meters is equal to {} kilometers"},
+        "meters to centimeters": {"factor": 100, "description": "{} meters is equal to {} centimeters"},
+        "kilometers to meters": {"factor": 1000, "description": "{} kilometers is equal to {} meters"},
+        "kilometers to centimeters": {"factor": 100000, "description": "{} kilometers is equal to {} centimeters"},
     }
 
     while True:
@@ -101,22 +95,22 @@ def calc(distance):
             break
 
     while True:
-        to_do = input(
-            "What do you want to convert from and to? ").lower()
-        if to_do in conversion_factors:
-            multiply_by = conversion_factors[to_do]
+        to_do = input("What do you want to convert from and to? ").lower()
+        if to_do in conversion_data:
+            conversion_info = conversion_data[to_do]
+            multiply_by = conversion_info["factor"]
+            description = conversion_info["description"]
             answer = your_num * multiply_by
-            conversion_description = conversion_factors.get(to_do, "Unknown conversion")
-            print(f"{conversion_description.format(your_num, answer)}")
+            print(f"{description.format(your_num, answer)}")
             break  # Exit the loop if a valid conversion choice is made
         else:
             print("Invalid conversion choice. Please choose a valid option.")
 
-
-# Main routine
 
 # Generates heading with *** on both sides
 # Asks user if they want the instructions or not
 statement_generator("Ultimate Conversion Calculator", "*")
 first_time = input("Press <enter> for instructions on how to use the calculator"
                    " otherwise any other key to continue")
+# Main routine
+distance()
