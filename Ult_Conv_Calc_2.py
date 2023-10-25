@@ -1,10 +1,8 @@
-# Functions go here
-
 # Checks that the number entered is more than 0
 def num_check(question):
     valid = False
     while not valid:
-        error = "Please enter a number that is more than zero and lower (or equal to) than 200 (no decimals)"
+        error = "Please enter a number that is more than zero (no decimals)"
         try:
             response = int(input(question))
             if response > 0:
@@ -63,7 +61,13 @@ distance_factors = {
 time_factors = {
     "s": 60,
     "m": 1,
-    "h": 1/60
+    "h": 1 / 60,
+}
+
+mass_factors = {
+    "mg": 1000,
+    "g": 1,
+    "kg": 1000,
 }
 
 # Generates heading with *** on both sides
@@ -71,6 +75,8 @@ time_factors = {
 statement_generator("Ultimate Conversion Calculator", "*")
 first_time = input("Press <enter> for instructions on how to use the calculator"
                    " otherwise any other key to continue")
+if first_time == "":
+    instructions()
 
 # Main routine
 calc_choice = user_choice()
@@ -80,27 +86,32 @@ while keep_going == "":
         conv_factors = distance_factors
     elif calc_choice == "time":
         conv_factors = time_factors
-
+    elif calc_choice == "mass":
+        conv_factors = mass_factors
     # Asks user what unit they are converting from
     conv_from = input("What do you want to convert from? ").lower()
     if conv_from not in conv_factors:
         print("Invalid input. Please choose from the available units.")
         continue
 
-    what_to_conv = conv_factors[conv_from]
+    from_factor = conv_factors[conv_from]
+    print(f"what to convert: {from_factor}")
 
     # Asks user for the value of the unit
     your_num = num_check("Enter the number of what you want to convert (no units): ")
 
     # Asks user what they are wanting to convert to
     conv_to = input("What do you want to convert to? ").lower()
+
     if conv_to not in conv_factors:
         print("Invalid input. Please choose from the available units.")
         continue
 
+    to_factor = conv_factors[conv_to]
+
     # Converts and displays the result
-    base = your_num * what_to_conv
-    result = base / conv_factors[conv_to]
+    base = your_num / from_factor
+    result = base * to_factor
     print(f"{your_num} {conv_from} is equal to {result} {conv_to}")
 
     # Ask if the user wants to continue
