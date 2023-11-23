@@ -1,22 +1,6 @@
 import re
 
 
-# Checks that the number entered is more than 0
-def num_check(question):
-    valid = False
-    while not valid:
-        error = "Please enter a number that is more than zero (no decimals)"
-        try:
-            response = int(input(question))
-            if response > 0:
-                return response
-            else:
-                print(error)
-                print()
-        except ValueError:
-            print(error)
-
-
 # Puts a series of symbols at the start and end of text
 def statement_generator(text, decoration):
     ends = decoration * 5
@@ -39,96 +23,57 @@ def instructions():
     print()
 
 
-# Asks the user if they which calculation they want to do
-def user_choice():
-    valid = False
-    while not valid:
-        question = input("What do you want to convert? (e.g. 10m to cm or 10m - cm) ").lower()
-        time_ok = ["time", "t"]
-        mass_ok = ["m", "mass", "weight"]
-        distance_ok = ["distance", "d"]
-        if question in time_ok:
-            return "time"
-        elif question in mass_ok:
-            return "mass"
-        elif question in distance_ok:
-            return "distance"
-
 def to_abbreviation(user_unit, valid_list):
     while True:
         for item in valid_list:
-            print("item in list", item)
             if user_unit in item:
-                print("possible unit", user_unit)
                 return item[0]
-
         print("oops, you have not chosen a valid unit")
         return "error"
+
 
 statement_generator("Ultimate Conversion Calculator", "*")
 first_time = input("Press <enter> for instructions on how to use the calculator"
                    " otherwise any other key to continue")
+if first_time == "":
+    instructions()
 
-unit_list = ""
+unit_list = [
 
-distance_list = [
     ["mm", "millimeters", "millimeter"],
     ["cm", "centimeters", "centimeter"],
     ["m", "meters", "meter"],
     ["km", "kilometers", "kilometer"],
-]
-
-time_list = [
     ["h", "hours", "hour"],
     ["m", "minutes", "minute"],
     ["s", "seconds", "second"],
-]
-
-mass_list = [
     ["kg", "kilograms", "kilogram"],
     ["g", "grams", "gram"],
     ["mg", "milligrams", "milligram"],
 ]
 
-if first_time == "":
-    instructions()
+distance_factors = {
+    "mm": 0.001,
+    "cm": 0.01,
+    "m": 1,
+    "km": 1000,
+}
+time_factors = {
+    "s": 1 / 60,
+    "m": 1,
+    "h": 60,
+}
+
+mass_factors = {
+    "mg": 1000,
+    "g": 1,
+    "kg": 1000,
+}
 
 keep_going = ""
 while keep_going == "":
-    domain = user_choice()
 
-    if domain == "distance":
-        unit_list = distance_list
-    elif domain == "time":
-        unit_list = time_list
-    elif domain == "mass":
-        unit_list = mass_list
-
-    to_convert = input("What do you want to convert? (e.g. 10m to cm or 10m - cm) ")
-
-    unit = re.match("^", to_convert)
-
-    print(unit)
-
-    distance_factors = {
-        "mm": 0.001,
-        "cm": 0.01,
-        "m": 1,
-        "km": 1000,
-    }
-    time_factors = {
-        "s": 60,
-        "m": 1,
-        "h": 1 / 60,
-    }
-
-    mass_factors = {
-        "mg": 1000,
-        "g": 1,
-        "kg": 1000,
-    }
-
-    # to_convert = input("What do you want to convert? (e.g. 10m to cm or 10m - cm) ")
+    to_convert = input("What do you want to convert? (e.g. 10m to cm or 10m-cm or 10 meters to centimeters) ").lower()
 
     # Turns "to" into a "-"
     x = re.sub(" to ", "-", to_convert)
@@ -143,30 +88,20 @@ while keep_going == "":
         amount = float(match.group(1))
         from_unit = match.group(2)
         from_unit = to_abbreviation(from_unit, unit_list)
-
         to_unit = match.group(3)
         to_unit = to_abbreviation(to_unit, unit_list)
-        #
-        # time_ok = ["time", "t"]
-        # mass_ok = ["m", "mass", "weight"]
-        # conv_factors = [
-        #     ["mm", "millimeters", "millimeter"],
-        #     ["cm", "centimeters", "centimeter"],
-        #     ["m", "meters", "meter"],
-        #     ["km", "kilometers", "kilometer"],
-        #     ["kg", "kilograms", "kilogram"],
-        #     ["g", "grams", "gram"],
-        #     ["mg", "milligram"]
-        # ]
-        print("Amount:", amount)
-        print("From:", from_unit)
-        print("To:", to_unit)
     else:
-        print("Pattern not found.")
+        print("Please follow the format")
 
+    if from_unit in ["km", "m", 'cm', "mm"]:
+        conv_factors = distance_factors
+    elif from_unit in ["kg", "g", "mg"]:
+        conv_factors = mass_factors
+    elif from_unit in ["h", "m", "s"]:
+        conv_factors = time_factors
     # Converts and prints result
-    # result = amount * conv_factors[from_unit] / conv_factors[to_unit]
-    # print(f"{amount}{from_unit} is equal to {result}{to_unit}")
+    result = amount * conv_factors[from_unit] / conv_factors[to_unit]
+    print(f"{amount}{from_unit} is equal to {result}{to_unit}")
 
     # Ask if the user wants to continue
     keep_going = input("Press Enter to continue or any other key to quit: ")
