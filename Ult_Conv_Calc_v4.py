@@ -45,7 +45,7 @@ unit_list = [
     ["m", "meters", "meter"],
     ["km", "kilometers", "kilometer"],
     ["h", "hours", "hour"],
-    ["m", "minutes", "minute"],
+    ["min", "minutes", "minute"],
     ["s", "seconds", "second"],
     ["kg", "kilograms", "kilogram"],
     ["g", "grams", "gram"],
@@ -60,7 +60,7 @@ distance_factors = {
 }
 time_factors = {
     "s": 1 / 60,
-    "m": 1,
+    "min": 1,
     "h": 60,
 }
 
@@ -97,7 +97,7 @@ while keep_going == "":
         conv_factors = distance_factors
     elif from_unit in ["kg", "g", "mg"]:
         conv_factors = mass_factors
-    elif from_unit in ["h", "m", "s"]:
+    elif from_unit in ["h", "min", "s"]:
         conv_factors = time_factors
     # Converts and prints result
     result = amount * conv_factors[from_unit] / conv_factors[to_unit]
