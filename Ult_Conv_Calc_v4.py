@@ -97,9 +97,9 @@ while keep_going == "":
         else:
             print("Please follow the format")
 
-    if from_unit not in conv_factors or to_unit not in conv_factors:
-        print("Invalid units. Please choose valid units.")
-        continue  # Restart the loop to get valid input
+    # if from_unit not in conv_factors or to_unit not in conv_factors:
+    #     print("Invalid units. Please choose valid units.")
+    #     continue  # Restart the loop to get valid input
 
     if from_unit in ["km", "m", 'cm', "mm"]:
         conv_factors = distance_factors
@@ -107,6 +107,12 @@ while keep_going == "":
         conv_factors = mass_factors
     elif from_unit in ["h", "min", "s"]:
         conv_factors = time_factors
+
+    # Checks that both units are in the from_unit dictionary, then asks question again
+    if from_unit not in conv_factors or to_unit not in conv_factors:
+        print("Invalid units. Please choose valid units.")
+        continue  # Restart the loop to get valid input
+
     # Converts and prints result
     result = amount * conv_factors[from_unit] / conv_factors[to_unit]
     print(f"{amount}{from_unit} is equal to {result}{to_unit}")
