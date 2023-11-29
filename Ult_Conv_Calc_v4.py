@@ -97,10 +97,6 @@ while keep_going == "":
         else:
             print("Please follow the format")
 
-    # if from_unit not in conv_factors or to_unit not in conv_factors:
-    #     print("Invalid units. Please choose valid units.")
-    #     continue  # Restart the loop to get valid input
-
     if from_unit in ["km", "m", 'cm', "mm"]:
         conv_factors = distance_factors
     elif from_unit in ["kg", "g", "mg"]:
