@@ -106,7 +106,7 @@ while keep_going == "":
 
     # Checks that both units are in the from_unit dictionary, then asks question again
     if from_unit not in conv_factors or to_unit not in conv_factors:
-        print("Invalid units. Please choose valid units.")
+        print("Invalid units, please choose the same type of units (e.g. km and m)")
         continue  # Restart the loop to get valid input
 
     # Converts and prints result
