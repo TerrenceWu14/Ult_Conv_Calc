@@ -70,28 +70,36 @@ mass_factors = {
     "kg": 1000,
 }
 
+conv_factors = ""
+
 keep_going = ""
 while keep_going == "":
 
     to_convert = input("What do you want to convert? (e.g. 10m to cm or 10m-cm or 10 meters to centimeters) ").lower()
 
-    # Turns "to" into a "-"
-    x = re.sub(" to ", "-", to_convert)
-    # Removes whitespaces
-    x = re.sub(" ", "", x)
-    # Define the regex pattern to capture the amount, 'from' unit, and 'to' unit
-    pattern = r'^(\d+)([a-zA-Z]+)-([a-zA-Z]+)$'
-    # Match the pattern in the input string
-    match = re.match(pattern, x)
-    # Puts the matches into groups
-    if match:
-        amount = float(match.group(1))
-        from_unit = match.group(2)
-        from_unit = to_abbreviation(from_unit, unit_list)
-        to_unit = match.group(3)
-        to_unit = to_abbreviation(to_unit, unit_list)
-    else:
-        print("Please follow the format")
+    while True:
+        # Turns "to" into a "-"
+        x = re.sub(" to ", "-", to_convert)
+        # Removes whitespaces
+        x = re.sub(" ", "", x)
+        # Define the regex pattern to capture the amount, 'from' unit, and 'to' unit
+        pattern = r'^(\d+)([a-zA-Z]+)-([a-zA-Z]+)$'
+        # Match the pattern in the input string
+        match = re.match(pattern, x)
+        # Puts the matches into groups
+        if match:
+            amount = float(match.group(1))
+            from_unit = match.group(2)
+            from_unit = to_abbreviation(from_unit, unit_list)
+            to_unit = match.group(3)
+            to_unit = to_abbreviation(to_unit, unit_list)
+            break
+        else:
+            print("Please follow the format")
+
+    if from_unit not in conv_factors or to_unit not in conv_factors:
+        print("Invalid units. Please choose valid units.")
+        continue  # Restart the loop to get valid input
 
     if from_unit in ["km", "m", 'cm', "mm"]:
         conv_factors = distance_factors
